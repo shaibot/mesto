@@ -1,0 +1,13 @@
+.profile__image-occupation {
+  width: 100%;
+  max-width: 486px;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 320px) {
+  .profile__image-occupation {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
