@@ -22,8 +22,7 @@
           class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button"><img src="./images/profile-info-slash.svg"
-              alt="Кнопка в виде белого карандаша в квадрате">
+          <button class="profile__edit-button">
           </button>
           <p class="profile__occupation">Исследователь океана</p>
         </div>
@@ -35,8 +34,7 @@
         <img src="./images/element-cherkesiya.jpg"
           alt="Небольшая каменная крепость на фоне склона горы, покрытого зеленым густым лесом." class="element__image">
         <figcaption class="element__caption-like">
-          <p class="element__caption">Карачаевск</p><img src="./images/element-like.svg" alt="иконка лайк"
-            class="element__like">
+          <p class="element__caption">Карачаевск</p><button class="element__like"></button>
         </figcaption>
       </figure>
       <figure class="element">
@@ -44,8 +42,7 @@
           alt="Пейзаж, на фоне закатного неба холмистая местность. Вдалеке виднеется силуэт вершины горы Эльбрус."
           class="element__image">
         <figcaption class="element__caption-like">
-          <p class="element__caption">Гора Эльбрус</p><img src="./images/element-like.svg" alt="иконка лайк"
-            class="element__like">
+          <p class="element__caption">Гора Эльбрус</p><button class="element__like"></button>
         </figcaption>
       </figure>
       <figure class="element">
@@ -53,8 +50,7 @@
           alt="Склоны гор на фоне хмурого серого неба.Склон на переднем плане покрыт хвойными деревьями, на заднем плане склоны голые, скалистые."
           class="element__image">
         <figcaption class="element__caption-like">
-          <p class="element__caption">Домбай</p><img src="./images/element-like.svg" alt="иконка лайк"
-            class="element__like">
+          <p class="element__caption">Домбай</p><button class="element__like"></button>
         </figcaption>
       </figure>
       <figure class="element">
@@ -62,8 +58,7 @@
           alt="Пейзаж, на фоне закатного неба холмистая местность. Вдалеке виднеется силуэт вершины горы Эльбрус."
           class="element__image">
         <figcaption class="element__caption-like">
-          <p class="element__caption">Гора Эльбрус</p><img src="./images/element-like.svg" alt="иконка лайк"
-            class="element__like">
+          <p class="element__caption">Гора Эльбрус</p><button class="element__like"></button>
         </figcaption>
       </figure>
       <figure class="element">
@@ -71,31 +66,31 @@
           alt="Склоны гор на фоне хмурого серого неба.Склон на переднем плане покрыт хвойными деревьями, на заднем плане склоны голые, скалистые."
           class="element__image">
         <figcaption class="element__caption-like">
-          <p class="element__caption">Домбай</p><img src="./images/element-like.svg" alt="иконка лайк"
-            class="element__like">
+          <p class="element__caption">Домбай</p><button class="element__like"></button>
         </figcaption>
       </figure>
       <figure class="element">
         <img src="./images/element-cherkesiya.jpg"
           alt="Небольшая каменная крепость на фоне склона горы, покрытого зеленым густым лесом." class="element__image">
         <figcaption class="element__caption-like">
-          <p class="element__caption">Карачаево-Черкессия</p><img src="./images/element-like.svg" alt="иконка лайк"
-            class="element__like">
+          <p class="element__caption">Карачаево-Черкессия</p><button class="element__like"></button>
         </figcaption>
       </figure>
     </section>
   </main>
-    <footer class="footer">&copy;&nbsp;2022 Mesto Russia</footer>
-    <section class="popup popup_is-opened">
-      <div class="popup__container">
-        <button class="popup__close"></button>
-        <div class="popup__content">
-          <h2 class="popup__title">Заголовок попапа</h2>
-          <p class="popup__text">Текст попапа</p>
-        </div>
-      </div>
-    </section>
-    <script src="./scripts/index.js"></script>
+  <footer class="footer">&copy;&nbsp;2022 Mesto Russia</footer>
+  <div class="popup">
+    <div class="popup__container">
+      <button class="popup__close"></button>
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="popup__content">
+        <input class="popup__name" type="text" placeholder="Введите ваше имя">
+        <input type="text" class="popup__occupation" placeholder="Введите ваш род занятий">
+        <button class="popup__save" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>

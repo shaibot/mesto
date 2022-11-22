@@ -5,3 +5,15 @@
   width: 100%;
   margin: 0 auto 66px;
 }
+
+@media screen and (max-width: 940px) {
+.elements {
+  max-width: calc(100vw - 30px * 2);
+}
+}
+
+@media screen and (max-width: 320px) {
+  .elements {
+    max-width: calc(100vw - 19px * 2);
+  }
+}

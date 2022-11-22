@@ -5,13 +5,21 @@
   background-size: auto;
   border: none;
   position: absolute;
-  /* top: 28px; */
+  top: -39px;
+  right: -40px;
 
 }
 
-@media screen and (max-width: 320px) {
+.popup__close:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 719px) {
   .popup__close {
     width: 20px;
     height: 20px;
+    top: -36px;
+    right: -3px;
+    background-image: url(../../../images/mobile-close-icon.svg);
   }
 }
