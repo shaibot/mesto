@@ -31,6 +31,7 @@
       <ul class="elements__list">
         <li>
           <figure class="element">
+            <button class="element__card-delete"></button>
             <img src="./images/element-cherkesiya.jpg"
               alt="Небольшая каменная крепость на фоне склона горы, покрытого зеленым густым лесом."
               class="element__image">
@@ -41,6 +42,7 @@
         </li>
         <li>
           <figure class="element">
+            <button class="element__card-delete"></button>
             <img src="./images/element-elbrus.jpg"
               alt="Пейзаж, на фоне закатного неба холмистая местность. Вдалеке виднеется силуэт вершины горы Эльбрус."
               class="element__image">
@@ -51,6 +53,7 @@
         </li>
         <li>
           <figure class="element">
+            <button class="element__card-delete"></button>
             <img src="./images/element-dombay.jpg"
               alt="Склоны гор на фоне хмурого серого неба.Склон на переднем плане покрыт хвойными деревьями, на заднем плане склоны голые, скалистые."
               class="element__image">
@@ -61,6 +64,7 @@
         </li>
         <li>
           <figure class="element">
+            <button class="element__card-delete"></button>
             <img src="./images/element-elbrus.jpg"
               alt="Пейзаж, на фоне закатного неба холмистая местность. Вдалеке виднеется силуэт вершины горы Эльбрус."
               class="element__image">
@@ -71,6 +75,7 @@
         </li>
         <li>
           <figure class="element">
+            <button class="element__card-delete"></button>
             <img src="./images/element-dombay.jpg"
               alt="Склоны гор на фоне хмурого серого неба.Склон на переднем плане покрыт хвойными деревьями, на заднем плане склоны голые, скалистые."
               class="element__image">
@@ -81,6 +86,7 @@
         </li>
         <li>
           <figure class="element">
+            <button class="element__card-delete"></button>
             <img src="./images/element-cherkesiya.jpg"
               alt="Небольшая каменная крепость на фоне склона горы, покрытого зеленым густым лесом."
               class="element__image">
@@ -106,7 +112,20 @@
       </form>
     </div>
   </div>
+  <script src="./scripts/data.js"></script>
   <script src="./scripts/index.js"></script>
+
+  <template id="card-template">
+    <li>
+      <figure class="element">
+        <img src="" alt="" class="element__image">
+        <figcaption class="element__caption-like">
+          <p class="element__caption"></p><button class="element__like"></button>
+        </figcaption>
+      </figure>
+    </li>
+  </template>
+
 </body>
 
 </html>

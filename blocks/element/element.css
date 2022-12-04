@@ -4,6 +4,7 @@
   margin: 0 auto;
   border-radius: 10px;
   overflow: hidden;
-min-height: 361px;
-background-color: #fff;
+  min-height: 361px;
+  background-color: #fff;
+  position: relative;
 }
