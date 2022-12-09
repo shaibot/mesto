@@ -36,6 +36,8 @@ const nameInput = popupElement.querySelector('.popup__name');
 const jobInput = popupElement.querySelector('.popup__occupation');
 const profileName = document.querySelector('.profile__name');
 const profileOccupation = document.querySelector('.profile__occupation');
+const popupImageBigItem = popupImageBig.querySelector('.popup__image');
+const popupImageBigName = popupImageBig.querySelector('.popup__image-caption');
 
 //Кнопки открытия попапов
 const popupOpenButtonElement = document.querySelector('.profile__edit-button');
@@ -58,11 +60,11 @@ const formInputCardName = document.querySelector('[name="card-name"');
 
 const handleDeleteCard = (event) => {
   event.target.closest('.elements__item').remove();
-  }
+}
 
-  const handleLikeCard = (event) =>{
-    event.target.closest('.element__like').classList.toggle('element__like_active');
-  }
+const handleLikeCard = (event) => {
+  event.target.closest('.element__like').classList.toggle('element__like_active');
+}
 
 const createCard = (item) => {
   const newCard = cardTemplate.cloneNode(true);
@@ -70,11 +72,24 @@ const createCard = (item) => {
   const cardName = newCard.querySelector('.element__caption');
   cardName.textContent = item.name;
 
+  const cardLink = newCard.querySelector('.element__image');
+  cardLink.src = item.link;
+
+  const cardLinkAlt = newCard.querySelector('.element__image');
+  cardLinkAlt.alt = item.name;
+
   const deleteCardBtn = newCard.querySelector('.element__card-delete');
   deleteCardBtn.addEventListener('click', handleDeleteCard);
 
   const likeCardBtn = newCard.querySelector('.element__like');
   likeCardBtn.addEventListener('click', handleLikeCard);
+
+  cardLink.addEventListener('click', () => {
+    popupImageBigItem.src = item.link;
+    popupImageBigItem.alt = item.name;
+    popupImageBigName.textContent = item.name;
+    openPopup(popupImageBig);
+  })
 
   return newCard;
 }
@@ -87,15 +102,12 @@ initialCards.forEach(function (item) {
   renderCard(item);
 })
 
-
 //Функция отправки формы карточки
 const handleFormSubmitAddCard = (e) => {
   e.preventDefault();
-  renderCard({name: input.value});
+  renderCard({ name: input.value });
   input.value = '';
 }
-
-
 
 //Функция открытия-закрытия popup
 const togglePopup = function (popup) {
@@ -110,45 +122,34 @@ function formSubmitHandler(evt) {
   togglePopup(popupElement);
 }
 
-  //Слушатели
-  popupOpenButtonElement.addEventListener('click', function () {
-    togglePopup(popupElement);
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileOccupation.textContent;
-  });
+//Слушатели
+popupOpenButtonElement.addEventListener('click', function () {
+  togglePopup(popupElement);
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileOccupation.textContent;
+});
 
-  popupCloseButtonElement.addEventListener('click', function () {
-    togglePopup(popupElement);
-  })
+popupCloseButtonElement.addEventListener('click', function () {
+  togglePopup(popupElement);
+})
 
-  popupCardAddOpenButtonElement.addEventListener('click', function () {
-    togglePopup(popupCardAdd);
-  })
+popupCardAddOpenButtonElement.addEventListener('click', function () {
+  togglePopup(popupCardAdd);
+})
 
-  popupCloseCardAdd.addEventListener('click', function () {
-    togglePopup(popupCardAdd);
-  })
+popupCloseCardAdd.addEventListener('click', function () {
+  togglePopup(popupCardAdd);
+})
 
-  popupImageBigOpenButton.addEventListener('click', function () {
-    togglePopup(popupImageBig);
-  })
+popupImageBigOpenButton.addEventListener('click', function () {
+  togglePopup(popupImageBig);
+})
 
-  popupCloseImageBig.addEventListener('click', function () {
-    togglePopup(popupImageBig);
-  })
-  formElement.addEventListener('submit', formSubmitHandler);
+popupCloseImageBig.addEventListener('click', function () {
+  togglePopup(popupImageBig);
+})
+formElement.addEventListener('submit', formSubmitHandler);
 
-  formCardElement.addEventListener('submit', handleFormSubmitAddCard);
-// const closePopupByClickOnOverlay = function(event) {
-//   if (event.target !== event.currentTarget) {
-//     closePopup();
-//   }
-// };
+formCardElement.addEventListener('submit', handleFormSubmitAddCard);
 
-
-// popupElement.addEventListener('click', closePopupByClickOnOverlay);
-
-
-
-//Функция добавления на страницу карточки с template
 
