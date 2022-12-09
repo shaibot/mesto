@@ -29,7 +29,7 @@
     </section>
     <section class="elements">
       <ul class="elements__list">
-        <li>
+        <li class="elements__item">
           <figure class="element">
             <button class="element__card-delete"></button>
             <img src="./images/element-cherkesiya.jpg"
@@ -40,7 +40,7 @@
             </figcaption>
           </figure>
         </li>
-        <li>
+        <li class="elements__item">
           <figure class="element">
             <button class="element__card-delete"></button>
             <img src="./images/element-elbrus.jpg"
@@ -51,7 +51,7 @@
             </figcaption>
           </figure>
         </li>
-        <li>
+        <li class="elements__item">
           <figure class="element">
             <button class="element__card-delete"></button>
             <img src="./images/element-dombay.jpg"
@@ -62,7 +62,7 @@
             </figcaption>
           </figure>
         </li>
-        <li>
+        <li class="elements__item">
           <figure class="element">
             <button class="element__card-delete"></button>
             <img src="./images/element-elbrus.jpg"
@@ -73,7 +73,7 @@
             </figcaption>
           </figure>
         </li>
-        <li>
+        <li class="elements__item">
           <figure class="element">
             <button class="element__card-delete"></button>
             <img src="./images/element-dombay.jpg"
@@ -84,7 +84,7 @@
             </figcaption>
           </figure>
         </li>
-        <li>
+        <li class="elements__item">
           <figure class="element">
             <button class="element__card-delete"></button>
             <img src="./images/element-cherkesiya.jpg"
@@ -101,7 +101,7 @@
   <footer>
     <p class="footer">&copy;&nbsp;2022 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup" id="popup-edit-profile">
     <div class="popup__container">
       <button class="popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
@@ -112,19 +112,39 @@
       </form>
     </div>
   </div>
+  <div class="popup" id="popup-card-add">
+    <div class="popup__container">
+      <button class="popup__close"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__content" id="form-for-card">
+        <input class="popup__name" type="text" name="card-name" placeholder="Название" required>
+        <input type="url" class="popup__occupation" placeholder="Ссылка на картинку" required>
+        <button class="popup__save" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+<div class="popup popup_big-image" id="popup-image-big">
+  <figure class="popup__image-container">
+    <button class="popup__close"></button>
+    <img class="popup__image" src="">
+  <figcaption class="popup__image-caption"></figcaption>
+  </figure>
+</div>
+
+<template id="card-template">
+  <li class="elements__item">
+    <figure class="element">
+      <button class="element__card-delete"></button>
+      <img src="" alt="" class="element__image">
+      <figcaption class="element__caption-like">
+        <p class="element__caption"></p><button class="element__like"></button>
+      </figcaption>
+    </figure>
+  </li>
+</template>
   <script src="./scripts/data.js"></script>
   <script src="./scripts/index.js"></script>
 
-  <template id="card-template">
-    <li>
-      <figure class="element">
-        <img src="" alt="" class="element__image">
-        <figcaption class="element__caption-like">
-          <p class="element__caption"></p><button class="element__like"></button>
-        </figcaption>
-      </figure>
-    </li>
-  </template>
 
 </body>
 
