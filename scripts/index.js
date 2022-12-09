@@ -54,7 +54,8 @@ const popupCloseImageBig = popupImageBig.querySelector('.popup__close');
 const cardListElement = document.querySelector('.elements__list');
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.elements__item');
 const formCardElement = document.querySelector('#form-for-card');
-const formInputCardName = document.querySelector('[name="card-name"');
+const formInputCardName = document.querySelector('.name');
+const formInputCardLink = document.querySelector('.link');
 
 // Функции карточек: удаление, добавление, лайк
 
@@ -105,8 +106,13 @@ initialCards.forEach(function (item) {
 //Функция отправки формы карточки
 const handleFormSubmitAddCard = (e) => {
   e.preventDefault();
-  renderCard({ name: input.value });
-  input.value = '';
+  renderCard({
+    name: formInputCardName.value,
+    link: formInputCardLink.value,
+  });
+  formInputCardName.value = '';
+  formInputCardLink.value = '';
+  togglePopup(popupCardAdd);
 }
 
 //Функция открытия-закрытия popup
@@ -139,10 +145,6 @@ popupCardAddOpenButtonElement.addEventListener('click', function () {
 
 popupCloseCardAdd.addEventListener('click', function () {
   togglePopup(popupCardAdd);
-})
-
-popupImageBigOpenButton.addEventListener('click', function () {
-  togglePopup(popupImageBig);
 })
 
 popupCloseImageBig.addEventListener('click', function () {
