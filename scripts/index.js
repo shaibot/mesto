@@ -88,7 +88,7 @@ const createCard = (item) => {
     popupImageBigItem.src = item.link;
     popupImageBigItem.alt = item.name;
     popupImageBigName.textContent = item.name;
-    openPopup(popupImageBig);
+    togglePopup(popupImageBig);
   })
 
   return newCard;
