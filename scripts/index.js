@@ -6,9 +6,9 @@ const popupCardAdd = document.querySelector('#popup-card-add');
 const popupImageBig = document.querySelector('#popup-image-big');
 
 //контент внутри попапов
-const formEditProfile = popupEditProfile.querySelector('.popup__content');
-const nameInput = popupEditProfile.querySelector('.popup__name');
-const jobInput = popupEditProfile.querySelector('.popup__occupation');
+const formEditProfile = popupEditProfile.querySelector('.popup__form');
+const nameInput = popupEditProfile.querySelector('.input_name');
+const jobInput = popupEditProfile.querySelector('.popup_occupation');
 const profileName = document.querySelector('.profile__name');
 const profileOccupation = document.querySelector('.profile__occupation');
 const popupImageBigItem = popupImageBig.querySelector('.popup__image');
@@ -93,6 +93,13 @@ const toggleClassPopup = function (popup) {
   popup.classList.toggle('popup_opened');
 }
 
+//Закрытие попапов при клике по overlay
+const closePopupByClickOnOverlay = (e) => {
+  if(!e.target.closest('.popup__container')) {
+    toggleClassPopup(e.target.closest('.popup'));
+  }
+}
+
 //Функция для кнопки Сохранить popup profile
 function submitEditProfileForm(evt) {
   evt.preventDefault();
@@ -100,6 +107,12 @@ function submitEditProfileForm(evt) {
   profileOccupation.textContent = jobInput.value;
   toggleClassPopup(popupEditProfile);
 }
+
+// function closePopupOnEsc (evt) {
+//   if(evt.key === 'Escape') {
+//     toggleClassPopup(document.querySelector('popup_opened'));
+//   }
+// }
 
 //Слушатели
 popupOpenButtonElement.addEventListener('click', function () {
@@ -113,6 +126,9 @@ popupCloseButtonElement.addEventListener('click', function () {
 })
 
 popupCardAddOpenButtonElement.addEventListener('click', function () {
+  const cardSubmitBtn = popupCardAdd.querySelector('#card-submit');
+  cardSubmitBtn.setAttribute('disabled', true);
+  cardSubmitBtn.classList.add('popup__button_disabled');
   toggleClassPopup(popupCardAdd);
 })
 
@@ -127,4 +143,6 @@ formEditProfile.addEventListener('submit', submitEditProfileForm);
 
 formAddCard.addEventListener('submit', handleFormSubmitAddCard);
 
-
+popupEditProfile.addEventListener('click', closePopupByClickOnOverlay);
+popupCardAdd.addEventListener('click', closePopupByClickOnOverlay);
+popupImageBig.addEventListener('click', closePopupByClickOnOverlay);

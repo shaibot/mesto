@@ -1,14 +1,14 @@
-.popup__save {
+.popup__button {
   background-color: black;
   color: white;
   border: none;
   border-radius: 2px;
   padding: 0;
   width: 100%;
-  margin: 0 auto;
+  margin: 18px auto;
   min-height: 50px;
 }
 
-.popup__save:hover {
+.popup__button:hover {
   opacity: .8;
 }
