@@ -7,8 +7,8 @@ const popupImageBig = document.querySelector('#popup-image-big');
 
 //контент внутри попапов
 const formEditProfile = popupEditProfile.querySelector('.popup__form');
-const nameInput = popupEditProfile.querySelector('.input_name');
-const jobInput = popupEditProfile.querySelector('.popup_occupation');
+const nameInput = popupEditProfile.querySelector('.popup__input_name');
+const jobInput = popupEditProfile.querySelector('.popup__occupation');
 const profileName = document.querySelector('.profile__name');
 const profileOccupation = document.querySelector('.profile__occupation');
 const popupImageBigItem = popupImageBig.querySelector('.popup__image');
