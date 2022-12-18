@@ -9,6 +9,7 @@
   background-image: url(../../../images/profile-info-slash.svg);
   background-position: center;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .profile__edit-button:hover {

@@ -10,8 +10,10 @@
   position: absolute;
   top: 20px;
   right: 20px;
+  z-index: 1;
 }
 
 .element__card-delete:hover {
   opacity: .6;
+  cursor: pointer;
 }

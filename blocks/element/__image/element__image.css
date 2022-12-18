@@ -5,4 +5,5 @@
   max-height: 282px;
   object-fit: cover;
   margin: 0 auto 17px;
+  cursor: pointer;
 }

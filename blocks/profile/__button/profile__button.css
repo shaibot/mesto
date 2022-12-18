@@ -6,6 +6,7 @@
   border: 2px solid #fff;
   align-self: start;
   margin-top: 37px;
+  cursor: pointer;
 }
 
 .profile__button:hover {

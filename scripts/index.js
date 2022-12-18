@@ -49,9 +49,7 @@ const createCard = (item) => {
 
   const cardLink = newCard.querySelector('.element__image');
   cardLink.src = item.link;
-
-  const cardLinkAlt = newCard.querySelector('.element__image');
-  cardLinkAlt.alt = item.name;
+  cardLink.alt = item.name;
 
   const deleteCardBtn = newCard.querySelector('.element__card-delete');
   deleteCardBtn.addEventListener('click', handleDeleteCard);
