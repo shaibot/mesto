@@ -95,7 +95,7 @@ const toggleClassPopup = function (popup) {
 
 //Закрытие попапов при клике по overlay
 const closePopupByClickOnOverlay = (e) => {
-  if(!e.target.closest('.popup__container')) {
+  if (!e.target.closest('.popup__container')) {
     toggleClassPopup(e.target.closest('.popup'));
   }
 }
@@ -108,13 +108,16 @@ function submitEditProfileForm(evt) {
   toggleClassPopup(popupEditProfile);
 }
 
-// function closePopupOnEsc (evt) {
-//   if(evt.key === 'Escape') {
-//     toggleClassPopup(document.querySelector('popup_opened'));
-//   }
-// }
+// Функция закрытия попапов по нажатию на Esc
+function closePopupOnEsc(evt) {
+  if (evt.key === 'Escape') {
+    toggleClassPopup(document.querySelector('.popup_opened'))
+  }
+}
 
 //Слушатели
+document.addEventListener('keydown', closePopupOnEsc);
+
 popupOpenButtonElement.addEventListener('click', function () {
   toggleClassPopup(popupEditProfile);
   nameInput.value = profileName.textContent;
@@ -146,3 +149,4 @@ formAddCard.addEventListener('submit', handleFormSubmitAddCard);
 popupEditProfile.addEventListener('click', closePopupByClickOnOverlay);
 popupCardAdd.addEventListener('click', closePopupByClickOnOverlay);
 popupImageBig.addEventListener('click', closePopupByClickOnOverlay);
+

@@ -23,11 +23,11 @@ const toggleDisableBtn = (inputs, button, config) => {
   if (formValid) {
     //раздизейблить
     button.classList.remove(config.inactiveButtonClass);
-    button.disabled = '';
+    button.disabled = false;
   } else {
     //задизейблить
     button.classList.add(config.inactiveButtonClass);
-    button.disabled = 'disabled';
+    button.disabled = true;
   }
 }
 
