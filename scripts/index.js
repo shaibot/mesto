@@ -25,6 +25,7 @@ const popupCloseImageBig = popupImageBig.querySelector('.popup__close');
 
 //Добавление const для элементов card
 
+const cardSubmitBtn = popupCardAdd.querySelector('#card-submit');
 const cardListElement = document.querySelector('.elements__list');
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.elements__item');
 const formAddCard = document.querySelector('#form-for-card');
@@ -61,7 +62,7 @@ const createCard = (item) => {
     popupImageBigItem.src = item.link;
     popupImageBigItem.alt = item.name;
     popupImageBigName.textContent = item.name;
-    toggleClassPopup(popupImageBig);
+    openPopup(popupImageBig);
   })
 
   return newCard;
@@ -83,18 +84,27 @@ const handleFormSubmitAddCard = (e) => {
     link: formInputCardLink.value,
   });
   e.target.reset();
-  toggleClassPopup(popupCardAdd);
+  closePopup(popupCardAdd);
 }
 
-//Функция открытия-закрытия popup
-const toggleClassPopup = function (popup) {
-  popup.classList.toggle('popup_opened');
+//Функция открытия-закрытия popup //toggleClassPopup разделяю на отдельные функции
+//Отдельно будет функция Открытия и отдельно Закрытия
+
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupOnEsc);
+}
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupOnEsc);
 }
 
 //Закрытие попапов при клике по overlay
+
 const closePopupByClickOnOverlay = (e) => {
   if (!e.target.closest('.popup__container')) {
-    toggleClassPopup(e.target.closest('.popup'));
+    closePopup(e.target);
   }
 }
 
@@ -103,42 +113,41 @@ function submitEditProfileForm(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileOccupation.textContent = jobInput.value;
-  toggleClassPopup(popupEditProfile);
+  closePopup(popupEditProfile);
 }
 
 // Функция закрытия попапов по нажатию на Esc
 function closePopupOnEsc(evt) {
   if (evt.key === 'Escape') {
-    toggleClassPopup(document.querySelector('.popup_opened'))
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 }
 
 //Слушатели
-document.addEventListener('keydown', closePopupOnEsc);
 
 popupOpenButtonElement.addEventListener('click', function () {
-  toggleClassPopup(popupEditProfile);
+  openPopup(popupEditProfile);
   nameInput.value = profileName.textContent;
   jobInput.value = profileOccupation.textContent;
 });
 
 popupCloseButtonElement.addEventListener('click', function () {
-  toggleClassPopup(popupEditProfile);
+  closePopup(popupEditProfile);
 })
 
 popupCardAddOpenButtonElement.addEventListener('click', function () {
-  const cardSubmitBtn = popupCardAdd.querySelector('#card-submit');
   cardSubmitBtn.setAttribute('disabled', true);
   cardSubmitBtn.classList.add('popup__button_disabled');
-  toggleClassPopup(popupCardAdd);
+  openPopup(popupCardAdd);
 })
 
 popupCloseCardAdd.addEventListener('click', function () {
-  toggleClassPopup(popupCardAdd);
+  closePopup(popupCardAdd);
 })
 
 popupCloseImageBig.addEventListener('click', function () {
-  toggleClassPopup(popupImageBig);
+  closePopup(popupImageBig);
 })
 formEditProfile.addEventListener('submit', submitEditProfileForm);
 
