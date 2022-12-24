@@ -1,17 +1,17 @@
-// const checkInputValidity = (input, config) => {
-//   const error = document.querySelector(`#${input.id}-error`);
+const checkInputValidity = (input, config) => {
+  const error = document.querySelector(`#${input.id}-error`);
 
-//   if (input.validity.valid) {
-//     error.textContent = '';
-//     error.classList.remove(config.errorClass);
-//     input.classList.remove(config.inputErrorClass);
-//   } else {
-//     error.textContent = input.validationMessage;
-//     error.classList.add(config.errorClass);
-//     input.classList.add(config.inputErrorClass);
+  if (input.validity.valid) {
+    error.textContent = '';
+    error.classList.remove(config.errorClass);
+    input.classList.remove(config.inputErrorClass);
+  } else {
+    error.textContent = input.validationMessage;
+    error.classList.add(config.errorClass);
+    input.classList.add(config.inputErrorClass);
 
-//   }
-// }
+  }
+}
 
 const form = document.querySelector('.popup__form');
 const formInput = form.querySelector('.popup__input');

@@ -1,21 +1,16 @@
-// const formElement = document.querySelector('.popup__form');
-// const formInput = formElement.querySelector('.popup__input');
+const showInputError = (formElement, formInput, errorMessage, config) => {
+  const formError = formElement.querySelector(`#${formInput.id}-error`);
 
-// const formError = formElement.querySelector(`.${formInput.id}-error`);
-
-const showInputError = (formElement, formInput, errorMessage) => {
-  const formError = formElement.querySelector(`.${formInput.id}-error`);
-
-  formInput.classList.add('popup__input_type_error');
+  formInput.classList.add(config.inputErrorClass);
   formError.textContent = errorMessage;
-  formError.classList.add('popup__error_visible');
+  formError.classList.add(config.errorClass);
   };
 
-const hideInputError = (formElement, formInput,) => {
-  const formError = formElement.querySelector(`.${formInput.id}-error`);
+const hideInputError = (formElement, formInput, config) => {
+  const formError = formElement.querySelector(`#${formInput.id}-error`);
 
-  formInput.classList.remove('popup__input_type_error');
-  formError.classList.remove('popup__error_visible');
+  formInput.classList.remove(config.inputErrorClass);
+  formError.classList.remove(config.errorClass);
   formError.textContent = '';
 };
 
@@ -27,8 +22,8 @@ const checkInputValidity = (formElement, formInput) => {
   }
 };
 
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+const setEventListeners = (formElement, config) => {
+  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
 
   inputList.forEach((formInput) => {
     formInput.addEventListener('input', () => {
@@ -37,12 +32,36 @@ const setEventListeners = (formElement) => {
   });
 }
 
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
+//  Дизейбл кнопки
+const toggleDisableBtn = (inputs, button, config) => {
+  const formValid = inputs.every(input => input.validity.valid);
+
+  if (formValid) {
+    //раздизейблить
+    button.classList.remove(config.inactiveButtonClass);
+    button.disabled = false;
+  } else {
+    //задизейблить
+    button.classList.add(config.inactiveButtonClass);
+    button.disabled = true;
+  }
+}
+
+
+const enableValidation = ({formSelector, inputSelector, submitButtonSelector, ...restConfig }) => {
+  const formList = Array.from(document.querySelectorAll(formSelector));
 
   formList.forEach((formElement) => {
     setEventListeners(formElement);
   });
 }
 
-enableValidation();
+
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+});
