@@ -139,6 +139,7 @@ popupCloseButtonElement.addEventListener('click', function () {
 popupCardAddOpenButtonElement.addEventListener('click', function () {
   cardSubmitBtn.setAttribute('disabled', true);
   cardSubmitBtn.classList.add('popup__button_disabled');
+  formAddCard.reset();
   openPopup(popupCardAdd);
 })
 
