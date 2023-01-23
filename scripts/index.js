@@ -1,4 +1,6 @@
+import {FormValidator} from './FormValidator.js';
 import initialCards from './data.js';
+import { Card } from './Card.js';
 
 //находим попапы
 const popupEditProfile = document.querySelector('#popup-edit-profile');
@@ -27,53 +29,48 @@ const popupCloseImageBig = popupImageBig.querySelector('.popup__close');
 
 const cardSubmitBtn = popupCardAdd.querySelector('#card-submit');
 const cardListElement = document.querySelector('.elements__list');
-const cardTemplate = document.querySelector('#card-template').content.querySelector('.elements__item');
 const formAddCard = document.querySelector('#form-for-card');
 const formInputCardName = document.querySelector('.name');
 const formInputCardLink = document.querySelector('.link');
+const cardTemplateSelector = '#card-template';
+
+//Для валидации
+const cardAddForm = popupCardAdd.querySelector('.popup__form');
+const profileEditForm = popupEditProfile.querySelector('.popup__form');
+
+const validationConfig = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
+};
+
+const addCardFormValidator = new FormValidator(validationConfig, cardAddForm);
+const profileEditFormValidator = new FormValidator(validationConfig, profileEditForm);
+
+addCardFormValidator.enableValidation();
+profileEditFormValidator.enableValidation();
+
 
 // Функции карточек: удаление, добавление, лайк
 
-const handleDeleteCard = (event) => {
-  event.target.closest('.elements__item').remove();
-}
-
-const handleLikeCard = (event) => {
-  event.target.closest('.element__like').classList.toggle('element__like_active');
-}
-
-const createCard = (item) => {
-  const newCard = cardTemplate.cloneNode(true);
-
-  const cardName = newCard.querySelector('.element__caption');
-  cardName.textContent = item.name;
-
-  const cardLink = newCard.querySelector('.element__image');
-  cardLink.src = item.link;
-  cardLink.alt = item.name;
-
-  const deleteCardBtn = newCard.querySelector('.element__card-delete');
-  deleteCardBtn.addEventListener('click', handleDeleteCard);
-
-  const likeCardBtn = newCard.querySelector('.element__like');
-  likeCardBtn.addEventListener('click', handleLikeCard);
-
-  cardLink.addEventListener('click', () => {
-    popupImageBigItem.src = item.link;
-    popupImageBigItem.alt = item.name;
-    popupImageBigName.textContent = item.name;
+const handleOpenBigImage = (name, link) => {
+    popupImageBigItem.src = link;
+    popupImageBigItem.alt = name;
+    popupImageBigName.textContent = name;
     openPopup(popupImageBig);
-  })
-
-  return newCard;
 }
 
-const renderInitialCards = (item) => {
-  cardListElement.prepend(createCard(item));
+const renderInitialCards = (data) => {
+  const newCard = new Card (data, cardTemplateSelector, handleOpenBigImage);
+  const cardElement = newCard.createCard();
+
+  cardListElement.prepend(cardElement);
 }
 
-initialCards.forEach(function (item) {
-  renderInitialCards(item);
+initialCards.forEach((data) => {
+  renderInitialCards(data);
 })
 
 //Функция отправки формы карточки
@@ -87,8 +84,7 @@ const handleFormSubmitAddCard = (e) => {
   closePopup(popupCardAdd);
 }
 
-//Функция открытия-закрытия popup //toggleClassPopup разделяю на отдельные функции
-//Отдельно будет функция Открытия и отдельно Закрытия
+//Функция открытия-закрытия popup 
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -127,6 +123,7 @@ function closePopupOnEsc(evt) {
 //Слушатели
 
 popupOpenButtonElement.addEventListener('click', function () {
+  profileEditFormValidator.resetValidation();
   openPopup(popupEditProfile);
   nameInput.value = profileName.textContent;
   jobInput.value = profileOccupation.textContent;
@@ -139,8 +136,10 @@ popupCloseButtonElement.addEventListener('click', function () {
 popupCardAddOpenButtonElement.addEventListener('click', function () {
   cardSubmitBtn.setAttribute('disabled', true);
   cardSubmitBtn.classList.add('popup__button_disabled');
+  addCardFormValidator.resetValidation();
   formAddCard.reset();
   openPopup(popupCardAdd);
+
 })
 
 popupCloseCardAdd.addEventListener('click', function () {
