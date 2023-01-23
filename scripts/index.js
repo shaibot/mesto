@@ -46,10 +46,10 @@ const validationConfig = {
   errorClass: 'popup__error_visible',
 };
 
-const addCardFormValidator = new FormValidator(validationConfig, cardAddForm);
+const formAddCardValidator = new FormValidator(validationConfig, cardAddForm);
 const profileEditFormValidator = new FormValidator(validationConfig, profileEditForm);
 
-addCardFormValidator.enableValidation();
+formAddCardValidator.enableValidation();
 profileEditFormValidator.enableValidation();
 
 
@@ -62,11 +62,15 @@ const handleOpenBigImage = (name, link) => {
     openPopup(popupImageBig);
 }
 
-const renderInitialCards = (data) => {
+const createNewCard = (data) => {
   const newCard = new Card (data, cardTemplateSelector, handleOpenBigImage);
   const cardElement = newCard.createCard();
 
-  cardListElement.prepend(cardElement);
+  return cardElement;
+}
+
+const renderInitialCards = (data) => {
+  cardListElement.prepend(createNewCard(data));
 }
 
 initialCards.forEach((data) => {
@@ -84,7 +88,7 @@ const handleFormSubmitAddCard = (e) => {
   closePopup(popupCardAdd);
 }
 
-//Функция открытия-закрытия popup 
+//Функция открытия-закрытия popup
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -136,7 +140,7 @@ popupCloseButtonElement.addEventListener('click', function () {
 popupCardAddOpenButtonElement.addEventListener('click', function () {
   cardSubmitBtn.setAttribute('disabled', true);
   cardSubmitBtn.classList.add('popup__button_disabled');
-  addCardFormValidator.resetValidation();
+  formAddCardValidator.resetValidation();
   formAddCard.reset();
   openPopup(popupCardAdd);
 
