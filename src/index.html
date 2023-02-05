@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Место</title>
-  <link rel="stylesheet" href="./pages/index.css">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
 </head>
 
 <body class="page">
@@ -56,7 +56,7 @@
       <button class="popup__close"></button>
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form" id="form-for-card" novalidate>
-        <input class="name popup__input popup__input_name" id="name-card" name="title" type="text" placeholder="Название"
+        <input class="name popup__input popup__input_name" id="name-card" name="name" type="text" placeholder="Название"
           minlength="2" maxlength="30" required>
         <span id="name-card-error" class="popup__error"></span>
         <input id="link" type="url" class="popup__occupation link popup__input" name="link"  placeholder="Ссылка на картинку"
@@ -69,7 +69,7 @@
   <div class="popup popup_big-image" id="popup-image-big">
     <figure class="popup__image-container">
       <button class="popup__close"></button>
-      <img class="popup__image" src=" ">
+      <img class="popup__image" src="#">
       <figcaption class="popup__image-caption"></figcaption>
     </figure>
   </div>
@@ -78,14 +78,14 @@
     <li class="elements__item">
       <figure class="element">
         <button class="element__card-delete"></button>
-        <img src=" " alt="" class="element__image">
+        <img src="#" alt="" class="element__image">
         <figcaption class="element__caption-like">
           <p class="element__caption"></p><button class="element__like"></button>
         </figcaption>
       </figure>
     </li>
   </template>
-  <script type="module" src="./scripts/index.js" defer></script>
+  <!-- <script type="module" src="./pages/index.js" defer></script> -->
 </body>
 
 </html>
