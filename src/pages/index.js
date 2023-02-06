@@ -4,11 +4,8 @@ import {
   initialCards,
   nameInput,
   jobInput,
-  cardSubmitBtn,
   popupOpenButtonElement,
   popupCardAddOpenButtonElement,
-  popupCloseButtonElement,
-  popupCloseCardAdd,
   popupImageSelector,
   cardListContainer,
   cardTemplateSelector,
@@ -95,16 +92,7 @@ popupOpenButtonElement.addEventListener('click', () => {
   popupEditProfileForm.open()
 })
 
-popupCloseButtonElement.addEventListener('click', function () {
-  popupEditProfileForm.close()
-})
-
 popupCardAddOpenButtonElement.addEventListener('click', function () {
-  cardSubmitBtn.setAttribute('disabled', true)
   formAddCardValidator.resetValidation()
   popupAddCardForm.open()
-})
-
-popupCloseCardAdd.addEventListener('click', function () {
-  popupAddCardForm.close()
 })

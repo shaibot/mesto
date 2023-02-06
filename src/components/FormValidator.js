@@ -31,7 +31,6 @@ export class FormValidator {
 
   _hideInputError = (input) => {
     const errorElement = this._form.querySelector(`#${input.id}-error`)
-
     input.classList.remove(this._config.inputErrorClass)
     errorElement.classList.remove(this._config.errorClass)
     errorElement.textContent = ''
@@ -57,8 +56,7 @@ export class FormValidator {
     }
   }
 
-  enableValidation() {
-    this._toggleBtnState()
+  _setEventListeners() {
     this._inputList.forEach((input) => {
       input.addEventListener('input', () => {
         this._checkInputValidity(input)
@@ -66,4 +64,9 @@ export class FormValidator {
       })
     })
   }
+
+  enableValidation() {
+    this._toggleBtnState();
+    this._setEventListeners()
+    }
 }

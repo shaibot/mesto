@@ -10,14 +10,12 @@ export class Card {
     this._cardLink = this._newCard.querySelector('.element__image')
   }
 
-  _handleDeleteCard = (event) => {
-    event.target.closest('.elements__item').remove()
+  _handleDeleteCard = () => {
+    this._newCard.remove()
   }
 
   _handleLikeCard = (event) => {
-    event.target
-      .closest('.element__like')
-      .classList.toggle('element__like_active')
+    this._likeCardBtn.classList.toggle('element__like_active')
   }
 
   _getTemplate() {

@@ -29,15 +29,11 @@ export const popupEditProfile = document.querySelector('#popup-edit-profile')
 export const popupCardAdd = document.querySelector('#popup-card-add')
 export const nameInput = popupEditProfile.querySelector('.popup__input_name')
 export const jobInput = popupEditProfile.querySelector('.popup__occupation')
-export const cardSubmitBtn = document.querySelector('#card-submit')
 export const popupOpenButtonElement = document.querySelector(
   '.profile__edit-button',
 )
 export const popupCardAddOpenButtonElement =
   document.querySelector('.profile__button')
-export const popupCloseButtonElement =
-  popupEditProfile.querySelector('.popup__close')
-export const popupCloseCardAdd = popupCardAdd.querySelector('.popup__close')
 
 export const popupImageSelector = '#popup-image-big'
 export const cardListContainer = '.elements__list'
