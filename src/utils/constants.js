@@ -27,8 +27,6 @@ export const initialCards = [
 
 export const popupEditProfile = document.querySelector('#popup-edit-profile')
 export const popupCardAdd = document.querySelector('#popup-card-add')
-export const nameInput = popupEditProfile.querySelector('.popup__input_name')
-export const jobInput = popupEditProfile.querySelector('.popup__occupation')
 export const popupOpenButtonElement = document.querySelector(
   '.profile__edit-button',
 )

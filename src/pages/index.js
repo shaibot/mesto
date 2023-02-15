@@ -2,8 +2,6 @@ import { UserInfo } from '../components/UserInfo.js'
 import { FormValidator } from '../components/FormValidator.js'
 import {
   initialCards,
-  nameInput,
-  jobInput,
   popupOpenButtonElement,
   popupCardAddOpenButtonElement,
   popupImageSelector,
@@ -85,10 +83,8 @@ profileEditFormValidator.enableValidation()
 
 popupOpenButtonElement.addEventListener('click', () => {
   profileEditFormValidator.resetValidation()
-  const { name, info } = userInfo.getUserInfo()
+  popupEditProfileForm.setInputValues(userInfo.getUserInfo())
 
-  nameInput.value = name
-  jobInput.value = info
   popupEditProfileForm.open()
 })
 

@@ -44,13 +44,15 @@ export class FormValidator {
     }
   }
 
+  disableBtn () {
+    this._button.classList.add(this._config.inactiveButtonClass)
+      this._button.disabled = true
+  }
+
   _toggleBtnState = () => {
     if (this._hasInvalidInput(this._inputList)) {
-      //задизейблить
-      this._button.classList.add(this._config.inactiveButtonClass)
-      this._button.disabled = true
+      this.disableBtn()
     } else {
-      //раздизейблить
       this._button.classList.remove(this._config.inactiveButtonClass)
       this._button.disabled = false
     }

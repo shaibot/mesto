@@ -9,6 +9,13 @@ export class PopupWithForm extends Popup {
     this._inputList = this._formElement.querySelectorAll('.popup__input')
   }
 
+  setInputValues(data) {
+    this._inputList.forEach((input) => {
+      // тут вставляем в `value` инпута данные из объекта по атрибуту `name` этого инпута
+      input.value = data[input.name];
+    });
+  }
+
   _getInputValues() {
     this._formValues = {}
     this._inputList.forEach((input) => {
