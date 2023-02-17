@@ -50,7 +50,6 @@ export default class Api {
   }
 
   // Удалить лайки
-
   deleteLike(cardId) {
     return fetch(`${this._url}/cards/likes/${cardId}`, {
       method: 'DELETE',

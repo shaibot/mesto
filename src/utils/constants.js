@@ -42,6 +42,8 @@ export const popupCardAddOpenButtonElement =
 export const popupInputLinkAvatar =
   popupEditAvatar.querySelector('.popup__input_link')
 export const editAvatarBtn = document.querySelector('.profile__edit-avatar-btn')
+export const popupDeleteCard = document.querySelector('#popup-card-delete')
+export const BtnOpenPopupDeleteCard = document.querySelector('element__card-delete')
 
 export const popupImageSelector = '#popup-image-big'
 export const cardListContainer = '.elements__list'

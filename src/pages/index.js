@@ -19,14 +19,14 @@ import {
   popupEditAvatarSelector,
 } from '../utils/constants'
 import { Card } from '../components/Card'
-import Section from '../components/Section.js'
+import Section from '../components/Section'
 import { PopupWithImage } from '../components/PopupWithImage'
 import { PopupWithForm } from '../components/PopupWithForm'
 import { PopupWithSubmit } from '../components/PopupWithSubmit'
 import Api from '../components/Api'
 import '../pages/index.css'
 
-// Получение данных с сервера
+/// Получение данных с сервера
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59',
   headers: {
@@ -36,29 +36,6 @@ const api = new Api({
 })
 
 let userId = null
-
-// // Получение данных пользователя
-// api
-//   .getUserInfo()
-//   .then((data) => {
-//     profileName.textContent = data.name
-//     profileOccupation.textContent = data.about
-//     profileAvatar.src = data.avatar
-//     userId = data._id
-//   })
-//   .catch((error) => {
-//     console.log(error)
-//   })
-
-// // Получение карточек с сервера
-// api
-//   .getInitialCards()
-//   .then((cards) => {
-//     renderInitialCards(cards)
-//   })
-//   .catch((error) => {
-//     console.log(error)
-//   })
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([user, cardList]) => {
@@ -75,28 +52,26 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
 const section = new Section({items: [], createNewCard}, cardListContainer)
 
-// Создание новой карточки
+// Создание новой карточки РАБОТАЛО
 const createNewCard = (item, userId) => {
   const newCard = new Card(item, userId, cardTemplateSelector, {
     handleCardClick: (name, link) => {
       popupWithBigImage.open(name, link)
     },
-    handleLikeClick: () => {
-      const cardLike = newCard.checkAvailabilityLike()
-      const resultApi = cardLike
-        ? api.deleteLike(newCard.getIdCard())
-        : api.addLike(newCard.getIdCard())
-      resultApi
-        .then((item) => {
-          newCard.addLike(item.likes)
-          newCard.renderLikes()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    handleLikeClick: (id) => {
+      newCard.checkAvailabilityLike()
+        ? api
+            .deleteLike(id)
+            .then(res=>newCard.setLikes(res.likes))
+            .catch(err=>console.log(err))
+        : api
+            .addLike(id)
+            .then(res=>newCard.setLikes(res.likes))
+            .catch(err=>console.log(err))
+
     },
-    handleDeleteBtnClick: () => {
-      popupWithSubmit.open(newCard)
+    handleDeleteBtnClick: (id, card) => {
+      popupWithSubmit.open(id, card)
     },
   })
   const cardElement = newCard.createCard()
@@ -106,21 +81,6 @@ const createNewCard = (item, userId) => {
 // Отрисовка каждой карточки
 section.renderItems
 
-// //Отрисовка карточек
-// const renderInitialCards = (cards) => {
-//   const cardElementList = new Section(
-//     {
-//       items: cards,
-//       renderer: (item) => {
-//         const card = createNewCard(item)
-//         cardElementList.addItem(card)
-//       },
-//     },
-//     cardListContainer,
-//   )
-
-//   cardElementList.renderItems()
-// }
 
 // Добавление новой карточки
 const addNewCard = (card) => {
@@ -129,10 +89,6 @@ const addNewCard = (card) => {
     .addNewCard(card.name, card.link)
     .then((item) => {
       const newCard = createNewCard(item, userId)
-      // const cardElement = newCard.createCard()
-      // cardListContainer.prepend(cardElement)
-    // })
-    // .then(() => {
       popupAddCardForm.close()
       popupAddCardForm.savingBtn('Сохранить')
     })
@@ -142,17 +98,23 @@ const addNewCard = (card) => {
 }
 
 // Удаление карточки
-const handleDeleteCard = (card) => {
+const handleDeleteCard = (id, card) => {
   api
-    .deleteCard(card.getIdCard())
-    .then(() => {
+    .deleteCard(id)
+    .then((res) => {
+      popupWithSubmit.deleteCard()
       popupWithSubmit.close()
-      card.deleteCard()
     })
     .catch((error) => {
       console.log(error)
     })
 }
+
+// Попап подтверждения удаления карточки
+const popupWithSubmit = new PopupWithSubmit('#popup-card-delete', (id, card) =>
+  handleDeleteCard(id, card)
+)
+popupWithSubmit.setEventListeners()
 
 // Редактирование аватара пользователя
 const handleEditAvatar = () => {
@@ -201,11 +163,7 @@ const popupEditProfileForm = new PopupWithForm(
 )
 popupEditProfileForm.setEventListeners()
 
-// Попап подтверждения удаления карточки
-const popupWithSubmit = new PopupWithSubmit('#popup-card-delete', (card) =>
-  handleDeleteCard(card),
-)
-popupWithSubmit.setEventListeners()
+
 
 // Валидация инпутов в попапе добавления карточки
 const formAddCardValidator = new FormValidator(validationConfig, cardAddForm)
