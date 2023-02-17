@@ -26,7 +26,7 @@
 // ]
 
 export const popupEditAvatarSelector = '#popup-avatar-edit'
-export const profileAvatar = document.querySelector('.profile__avatar')
+// export const profileAvatar = document.querySelector('.profile__avatar')
 export const popupEditAvatar = document.querySelector(popupEditAvatarSelector)
 export const popupFormEditAvatar = popupEditAvatar.querySelector(
   '#form-for-edit-avatar',
@@ -64,9 +64,11 @@ export const validationConfig = {
 export const profileSelector = {
   userNameSelector: '.profile__name',
   userInfoSelector: '.profile__occupation',
+  avatarInfoSelector: '.profile__avatar'
 }
 
 export const profileName = document.querySelector(profileSelector.userNameSelector)
 export const profileOccupation = document.querySelector(
   profileSelector.userInfoSelector
 )
+export const profileAvatar = document.querySelector(profileSelector.avatarInfoSelector)

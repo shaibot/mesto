@@ -16,7 +16,7 @@ import {
   popupInputLinkAvatar,
   editAvatarBtn,
   popupFormEditAvatar,
-  popupEditAvatarSelector
+  popupEditAvatarSelector,
 } from '../utils/constants'
 import { Card } from '../components/Card'
 import Section from '../components/Section.js'
@@ -37,31 +37,46 @@ const api = new Api({
 
 let userId = null
 
-// Получение данных пользователя
-api
-  .getUserInfo()
-  .then((data) => {
-    profileName.textContent = data.name
-    profileOccupation.textContent = data.about
-    profileAvatar.src = data.avatar
-    userId = data._id
+// // Получение данных пользователя
+// api
+//   .getUserInfo()
+//   .then((data) => {
+//     profileName.textContent = data.name
+//     profileOccupation.textContent = data.about
+//     profileAvatar.src = data.avatar
+//     userId = data._id
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+// // Получение карточек с сервера
+// api
+//   .getInitialCards()
+//   .then((cards) => {
+//     renderInitialCards(cards)
+//   })
+//   .catch((error) => {
+//     console.log(error)
+//   })
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([user, cardList]) => {
+    userInfo.setUserInfo(user.name, user.about)
+    userInfo.setUserAvatar(user.avatar)
+    userId = user._id
+    cardList.forEach((item) => {
+      createNewCard(item, userId)
+    })
   })
-  .catch((error) => {
-    console.log(error)
+  .catch((err) => {
+    console.log(err)
   })
 
-// Получение карточек с сервера
-api
-  .getInitialCards()
-  .then((cards) => {
-    renderInitialCards(cards)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+const section = new Section({items: [], createNewCard}, cardListContainer)
 
 // Создание новой карточки
-const createNewCard = (item) => {
+const createNewCard = (item, userId) => {
   const newCard = new Card(item, userId, cardTemplateSelector, {
     handleCardClick: (name, link) => {
       popupWithBigImage.open(name, link)
@@ -84,27 +99,28 @@ const createNewCard = (item) => {
       popupWithSubmit.open(newCard)
     },
   })
-  return newCard
+  const cardElement = newCard.createCard()
+  section.addItem(cardElement)
 }
 
-//Отрисовка карточек
-const renderInitialCards = (cards) => {
-  const cardElementList = new Section(
-    {
-      items: cards,
-      renderer: (item) => {
-        const card = createNewCard(item)
-        cardElementList.addItem(card)
-      },
-    },
-    cardListContainer,
-  )
+// Отрисовка каждой карточки
+section.renderItems
 
-  cardElementList.renderItems()
-}
+// //Отрисовка карточек
+// const renderInitialCards = (cards) => {
+//   const cardElementList = new Section(
+//     {
+//       items: cards,
+//       renderer: (item) => {
+//         const card = createNewCard(item)
+//         cardElementList.addItem(card)
+//       },
+//     },
+//     cardListContainer,
+//   )
 
-
-
+//   cardElementList.renderItems()
+// }
 
 // Добавление новой карточки
 const addNewCard = (card) => {
@@ -112,11 +128,11 @@ const addNewCard = (card) => {
   api
     .addNewCard(card.name, card.link)
     .then((item) => {
-      const newCard = createNewCard(item)
-      const cardElement = newCard.createCard()
-      cardListContainer.prepend(cardElement)
-    })
-    .then(() => {
+      const newCard = createNewCard(item, userId)
+      // const cardElement = newCard.createCard()
+      // cardListContainer.prepend(cardElement)
+    // })
+    // .then(() => {
       popupAddCardForm.close()
       popupAddCardForm.savingBtn('Сохранить')
     })
@@ -138,14 +154,14 @@ const handleDeleteCard = (card) => {
     })
 }
 
-
 // Редактирование аватара пользователя
 const handleEditAvatar = () => {
   editAvatarPopup.savingBtn('Сохранение...')
   api
     .editUserAvatar(popupInputLinkAvatar.value)
-    .then(() => {
-      profileAvatar.src = popupInputLinkAvatar.value
+    .then((res) => {
+      userInfo.setUserAvatar(res.avatar)
+      // profileAvatar.src = popupInputLinkAvatar.value
       editAvatarPopup.close()
       editAvatarPopup.savingBtn('Сохранить')
     })
@@ -158,9 +174,9 @@ const handleEditAvatar = () => {
 const handleEditProfileFormSubmit = (item) => {
   popupEditProfileForm.savingBtn('Сохранение...')
   api
-    .editUserInfo(item.name, item.job)
-    .then(() => {
-      userInfo.setUserInfo(item)
+    .editUserInfo(item.name, item.info)
+    .then((res) => {
+      userInfo.setUserInfo(res.name, res.about)
       popupEditProfileForm.close()
       popupEditProfileForm.savingBtn('Сохранить')
     })
@@ -186,12 +202,10 @@ const popupEditProfileForm = new PopupWithForm(
 popupEditProfileForm.setEventListeners()
 
 // Попап подтверждения удаления карточки
-const popupWithSubmit = new PopupWithSubmit(
-  '#popup-card-delete',
-  (card) => handleDeleteCard(card),
+const popupWithSubmit = new PopupWithSubmit('#popup-card-delete', (card) =>
+  handleDeleteCard(card),
 )
 popupWithSubmit.setEventListeners()
-
 
 // Валидация инпутов в попапе добавления карточки
 const formAddCardValidator = new FormValidator(validationConfig, cardAddForm)
@@ -206,17 +220,16 @@ const profileEditFormValidator = new FormValidator(
 profileEditFormValidator.enableValidation()
 
 // Валидация в попапе редактирования аватара
-const avatarEditFormValidator = new FormValidator(validationConfig, popupFormEditAvatar)
+const avatarEditFormValidator = new FormValidator(
+  validationConfig,
+  popupFormEditAvatar,
+)
 avatarEditFormValidator.enableValidation()
-
-
 
 // const handleEditProfileFormSubmit = (evt, formValues) => {
 //   evt.preventDefault()
 //   userInfo.setUserInfo(formValues.name, formValues.info)
 // }
-
-
 
 // const handleCardAddFormSubmit = (evt, item) => {
 //   evt.preventDefault()
@@ -225,17 +238,12 @@ avatarEditFormValidator.enableValidation()
 // }
 
 //Попап для добавления карточки
-const popupAddCardForm = new PopupWithForm(
-  '#popup-card-add',
-  addNewCard,
-)
+const popupAddCardForm = new PopupWithForm('#popup-card-add', addNewCard)
 popupAddCardForm.setEventListeners()
-
 
 // Попап с большой картинкой
 const popupWithBigImage = new PopupWithImage(popupImageSelector)
 popupWithBigImage.setEventListeners()
-
 
 //Кнопка  - открыть попап редактирования профиля
 popupOpenButtonElement.addEventListener('click', () => {

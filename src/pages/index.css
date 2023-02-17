@@ -28,7 +28,7 @@
 @import url(../blocks/element/__caption-like/element__caption-like.css);
 @import url(../blocks/element/__card-delete/element__card-delete.css);
 @import url(../blocks/element/__like/_active/element__like_active.css);
-@import url(../blocks/element/__counter/element__counter.css);
+@import url(../blocks/element/__counter-likes/element__counter-likes.css);
 
 @import url(../blocks/footer/footer.css);
 

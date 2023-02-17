@@ -18,6 +18,8 @@ export class Card {
     this._cardName = this._newCard.querySelector('.element__caption')
     this._cardLink = this._newCard.querySelector('.element__image')
     this._counterLikes = this._newCard.querySelector('.element__counter-likes')
+    this._ownerId = data.owner._id
+    this._likes = data.likes
   }
 
 
@@ -75,10 +77,11 @@ renderLikes() {
     this._cardName.textContent = this._data.name
     this._cardLink.src = this._data.link
     this._cardLink.alt = this._data.name
-    if (this._ownerId !== this._userId) {
-      this._deleteButton.remove()
-    }
-    this.renderLikes()
+    this._counterLikes.textContent = this._likes.length
+    // if (this._ownerId !== this._userId) {
+    //   this._deleteCardBtn.remove()
+    // }
+    // this.renderLikes()
     this._addEventListeners()
 
     return this._newCard
