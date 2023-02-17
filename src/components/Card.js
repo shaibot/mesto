@@ -50,17 +50,18 @@ export class Card {
 
   // Проверить есть ли лайк юзера
   checkAvailabilityLike() {
-    const result = this._likes.find((item) => item._id === this._userId)
-    return result
+    // const result = this._likes.find((item) => item._id === this._userId)
+    // return result
 
-    // return this._cardLikes.find((like) => {
-    //   return like._id === this._userId
-    // })
+    return this._likes.find((like) => {
+      return like._id === this._userId
+    })
   }
 
   // Тоггл окрашивания лайка
   toggleLikeColor() {
     if (this.checkAvailabilityLike()) {
+      console.log(this._userId)
       this._addLike()
     } else {
       this._deleteLike()
@@ -103,6 +104,7 @@ export class Card {
 
     this._likeCardBtn.addEventListener('click', () => {
       this._handleLikeClick(this._cardId)
+
       this.toggleLikeColor()
       // this._handleLikeCard()
     })

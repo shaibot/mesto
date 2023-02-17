@@ -52,22 +52,24 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
 const section = new Section({items: [], createNewCard}, cardListContainer)
 
-// Создание новой карточки РАБОТАЛО
+// Создание новой карточки
 const createNewCard = (item, userId) => {
   const newCard = new Card(item, userId, cardTemplateSelector, {
     handleCardClick: (name, link) => {
       popupWithBigImage.open(name, link)
     },
     handleLikeClick: (id) => {
-      newCard.checkAvailabilityLike()
-        ? api
+    newCard.checkAvailabilityLike()
+              ? api
             .deleteLike(id)
-            .then(res=>newCard.setLikes(res.likes))
+            .then((res)=>{newCard.setLikes(res.likes)
+            console.log(res)})
             .catch(err=>console.log(err))
         : api
             .addLike(id)
-            .then(res=>newCard.setLikes(res.likes))
-            .catch(err=>console.log(err))
+            .then((res)=>{newCard.setLikes(res.likes)
+              console.log(res)})
+            .catch((err)=>{console.log(err)})
 
     },
     handleDeleteBtnClick: (id, card) => {
