@@ -42,16 +42,16 @@ export default class Api {
   }
 
   // Лайки
-  addLike(cardId) {
-    return fetch(`${this._url}/cards/${cardId}/likes/`, {
+  addLike(id) {
+    return fetch(`${this._url}/cards/${id}/likes/`, {
       method: 'PUT',
       headers: this._headers,
     }).then((res) => this._addResult(res))
   }
 
   // Удалить лайки
-  deleteLike(cardId) {
-    return fetch(`${this._url}/cards/${cardId}/likes/`, {
+  deleteLike(id) {
+    return fetch(`${this._url}/cards/${id}/likes/`, {
       method: 'DELETE',
       headers: this._headers,
     }).then((res) => this._addResult(res))

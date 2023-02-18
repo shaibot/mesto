@@ -31,24 +31,12 @@ export class Card {
       this._deleteCardBtn.style.display = 'none'
     }
     this.setLikes(this._likes)
-    // this.renderLikes()
+
     this._addEventListeners()
 
     return this._newCard
   }
 
-  // // Отображение количества лайков
-  // renderLikes() {
-  //   this._counterLikes.textContent = this._cardLikes.length
-  //   this.switchLikes(this._userId)
-  // }
-
-  // // Визуально поставить и снять лайк
-  // _handleLikeCard = () => {
-  //   this._likeCardBtn.classList.toggle('element__like_active')
-  // }
-
-  // Проверить есть ли лайк юзера
   checkAvailabilityLike() {
     // const result = this._likes.find((item) => item._id === this._userId)
     // return result
@@ -61,7 +49,6 @@ export class Card {
   // Тоггл окрашивания лайка
   toggleLikeColor() {
     if (this.checkAvailabilityLike()) {
-      console.log(this._userId)
       this._addLike()
     } else {
       this._deleteLike()
@@ -70,8 +57,8 @@ export class Card {
 
   // Установить лайк
   setLikes(likesList) {
-    this._cardLikes = likesList
-    this._counterLikes.textContent = this._cardLikes.length
+    this._likes = likesList
+    this._counterLikes.textContent = this._likes.length
     this.toggleLikeColor()
   }
 

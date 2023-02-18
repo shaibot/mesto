@@ -50,7 +50,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     console.log(err)
   })
 
-const section = new Section({items: [], createNewCard}, cardListContainer)
+const section = new Section({ items: [], createNewCard }, cardListContainer)
 
 // Создание новой карточки
 const createNewCard = (item, userId) => {
@@ -59,18 +59,21 @@ const createNewCard = (item, userId) => {
       popupWithBigImage.open(name, link)
     },
     handleLikeClick: (id) => {
-    newCard.checkAvailabilityLike()
-              ? api
+      newCard.checkAvailabilityLike()
+        ? api
             .deleteLike(id)
-            .then((res)=>{newCard.setLikes(res.likes)
-            console.log(res)})
-            .catch(err=>console.log(err))
+            .then((res) => {
+              newCard.setLikes(res.likes)
+            })
+            .catch((err) => console.log(err))
         : api
             .addLike(id)
-            .then((res)=>{newCard.setLikes(res.likes)
-              console.log(res)})
-            .catch((err)=>{console.log(err)})
-
+            .then((res) => {
+              newCard.setLikes(res.likes)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
     },
     handleDeleteBtnClick: (id, card) => {
       popupWithSubmit.open(id, card)
@@ -82,7 +85,6 @@ const createNewCard = (item, userId) => {
 
 // Отрисовка каждой карточки
 section.renderItems
-
 
 // Добавление новой карточки
 const addNewCard = (card) => {
@@ -114,7 +116,7 @@ const handleDeleteCard = (id, card) => {
 
 // Попап подтверждения удаления карточки
 const popupWithSubmit = new PopupWithSubmit('#popup-card-delete', (id, card) =>
-  handleDeleteCard(id, card)
+  handleDeleteCard(id, card),
 )
 popupWithSubmit.setEventListeners()
 
@@ -165,8 +167,6 @@ const popupEditProfileForm = new PopupWithForm(
 )
 popupEditProfileForm.setEventListeners()
 
-
-
 // Валидация инпутов в попапе добавления карточки
 const formAddCardValidator = new FormValidator(validationConfig, cardAddForm)
 formAddCardValidator.enableValidation()
@@ -185,17 +185,6 @@ const avatarEditFormValidator = new FormValidator(
   popupFormEditAvatar,
 )
 avatarEditFormValidator.enableValidation()
-
-// const handleEditProfileFormSubmit = (evt, formValues) => {
-//   evt.preventDefault()
-//   userInfo.setUserInfo(formValues.name, formValues.info)
-// }
-
-// const handleCardAddFormSubmit = (evt, item) => {
-//   evt.preventDefault()
-//   const card = createNewCard(item)
-//   cardElementList.addItem(card)
-// }
 
 //Попап для добавления карточки
 const popupAddCardForm = new PopupWithForm('#popup-card-add', addNewCard)
