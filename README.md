@@ -15,5 +15,3 @@
 
 * [Ссылка на проект в GitHub:](https://shaibot.github.io/mesto/index.html)
 * [Проект опубликован:](https://shaibot.github.io/mesto/)
-
-
