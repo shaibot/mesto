@@ -3,8 +3,8 @@ import { Popup } from './Popup.js'
 export class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super(popupSelector)
-    this._popupImageBigItem = this._popupSelector.querySelector('.popup__image')
-    this._popupImageBigName = this._popupSelector.querySelector(
+    this._popupImageBigItem = this._popupElement.querySelector('.popup__image')
+    this._popupImageBigName = this._popupElement.querySelector(
       '.popup__image-caption',
     )
   }

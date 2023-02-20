@@ -37,23 +37,22 @@ const api = new Api({
 
 let userId = null
 
-Promise.all([api.getUserInfo(), api.getInitialCards()])
-  .then(([user, cardList]) => {
-    userInfo.setUserInfo(user.name, user.about)
-    userInfo.setUserAvatar(user.avatar)
-    userId = user._id
-    cardList.forEach((item) => {
-      createNewCard(item, userId)
-    })
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+const section = new Section(
+  {
+    renderer: (item) => {
+      const cardElement = createNewCard(item)
+      section.addItem(cardElement)
+    },
+  },
+  cardListContainer,
+)
 
-const section = new Section({ items: [], createNewCard }, cardListContainer)
+const renderInitialCards = (cards) => {
+  section.renderItems(cards)
+}
 
 // Создание новой карточки
-const createNewCard = (item, userId) => {
+const createNewCard = (item) => {
   const newCard = new Card(item, userId, cardTemplateSelector, {
     handleCardClick: (name, link) => {
       popupWithBigImage.open(name, link)
@@ -79,12 +78,24 @@ const createNewCard = (item, userId) => {
       popupWithSubmit.open(id, card)
     },
   })
-  const cardElement = newCard.createCard()
-  section.addItem(cardElement)
+  // cardElement = newCard.createCard()
+  // section.prependAddItem(cardElement)
+  return newCard.createCard()
 }
 
-// Отрисовка каждой карточки
-section.renderItems
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([user, cardList]) => {
+    userInfo.setUserInfo(user.name, user.about)
+    userInfo.setUserAvatar(user.avatar)
+    userId = user._id
+    // cardList.forEach((item) => {
+    //   createNewCard(item, userId)
+    // })
+    renderInitialCards(cardList)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 
 // Добавление новой карточки
 const addNewCard = (card) => {
@@ -92,13 +103,15 @@ const addNewCard = (card) => {
   api
     .addNewCard(card.name, card.link)
     .then((item) => {
-      const newCard = createNewCard(item, userId)
+      // createNewCard(item, userId)
+      const cardElement = createNewCard(item)
+      section.prependAddItem(cardElement)
       popupAddCardForm.close()
-      popupAddCardForm.savingBtn('Сохранить')
     })
     .catch((error) => {
       console.log(error)
     })
+    .finally(popupAddCardForm.savingBtn('Создать'))
 }
 
 // Удаление карточки
@@ -127,13 +140,12 @@ const handleEditAvatar = () => {
     .editUserAvatar(popupInputLinkAvatar.value)
     .then((res) => {
       userInfo.setUserAvatar(res.avatar)
-      // profileAvatar.src = popupInputLinkAvatar.value
       editAvatarPopup.close()
-      editAvatarPopup.savingBtn('Сохранить')
     })
     .catch((error) => {
       console.log(error)
     })
+    .finally(editAvatarPopup.savingBtn('Сохранить'))
 }
 
 // Редактирование данных пользователя
@@ -144,11 +156,11 @@ const handleEditProfileFormSubmit = (item) => {
     .then((res) => {
       userInfo.setUserInfo(res.name, res.about)
       popupEditProfileForm.close()
-      popupEditProfileForm.savingBtn('Сохранить')
     })
     .catch((error) => {
       console.log(error)
     })
+    .finally(popupEditProfileForm.savingBtn('Сохранить'))
 }
 
 // Попап редактирования аватара
@@ -176,7 +188,6 @@ const profileEditFormValidator = new FormValidator(
   validationConfig,
   profileEditForm,
 )
-
 profileEditFormValidator.enableValidation()
 
 // Валидация в попапе редактирования аватара
@@ -210,5 +221,6 @@ popupCardAddOpenButtonElement.addEventListener('click', function () {
 
 //Кнопка - открыть попап редактирования аватара
 editAvatarBtn.addEventListener('click', () => {
+  avatarEditFormValidator.resetValidation()
   editAvatarPopup.open()
 })
